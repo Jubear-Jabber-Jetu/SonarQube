@@ -45,3 +45,12 @@ jobs:
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"Jubear-Jabber-Jetu_SonarQube" /o:"jubear-jabber-jetu" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
           dotnet build
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+      
+      - name: Generate SonarCloud Report URL
+        id: sonar_url
+        run: |
+          echo "SonarCloud Project URL: https://sonarcloud.io/dashboard?id=jubear-jabber-jetu"
+        continue-on-error: true
+
+      - name: Output SonarCloud Report URL
+        run: echo "SonarCloud analysis complete. View the report at ${{ steps.sonar_url.outputs.sonar_report_url }}"
